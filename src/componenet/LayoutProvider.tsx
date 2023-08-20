@@ -1,3 +1,4 @@
+import { Link } from "@chakra-ui/next-js";
 import {
   Box,
   Container,
@@ -7,7 +8,7 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { FC, ReactNode } from "react";
-import { CgBookmark, CgChevronRight, CgHeart } from "react-icons/cg";
+import { CgBookmark, CgHeart } from "react-icons/cg";
 
 const LayoutProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -20,26 +21,16 @@ const LayoutProvider: FC<{ children: ReactNode }> = ({ children }) => {
           >
             <List spacing={3}>
               <ListItem>
-                <ListIcon as={CgBookmark} />
-                Albums
-                <List spacing={3} ml="2" mt="3">
-                  <ListItem>
-                    <ListIcon as={CgChevronRight} />
-                    Albums
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={CgChevronRight} />
-                    Albums
-                  </ListItem>
-                  <ListItem>
-                    <ListIcon as={CgChevronRight} />
-                    Albums
-                  </ListItem>
-                </List>
+                <Link href="/my-gallery">
+                  <ListIcon as={CgBookmark} />
+                  My Gallery
+                </Link>
               </ListItem>
               <ListItem>
-                <ListIcon as={CgHeart} />
-                Favourite
+                <Link href="/my-likes">
+                  <ListIcon as={CgHeart} />
+                  Favourite
+                </Link>
               </ListItem>
             </List>
           </Box>

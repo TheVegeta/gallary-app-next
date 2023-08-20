@@ -28,6 +28,7 @@ import {
 import { useState } from "react";
 import { CgImage } from "react-icons/cg";
 import profileImage from "../assets/profile.jpg";
+import { useHelloQuery } from "../generated/graphql";
 import { useAppState } from "../store";
 import AuthModal from "./auth/AuthModal";
 
@@ -37,6 +38,8 @@ const AppNavbar = () => {
   const setAuthFalse = useAppState((item) => item.setAuthFalse);
 
   const [isAuthModal, setIsAuthModal] = useState<boolean>(false);
+
+  useHelloQuery();
 
   const toggleAuthModal = () => {
     setIsAuthModal((item) => !item);

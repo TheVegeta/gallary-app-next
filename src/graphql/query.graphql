@@ -30,3 +30,7 @@ query GetMyAllLikedGallery {
     }
   }
 }
+
+query Hello {
+  hello
+}

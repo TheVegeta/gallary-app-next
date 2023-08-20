@@ -7,11 +7,23 @@ import {
   ListIcon,
   ListItem,
 } from "@chakra-ui/react";
+import cogoToast from "cogo-toast";
 import { FC, ReactNode, memo } from "react";
 import isEqual from "react-fast-compare";
 import { CgBookmark, CgHeart } from "react-icons/cg";
+import { useAppState } from "../store";
 
 const LayoutProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
+  const {
+    userInfo: { isAuth },
+  } = useAppState();
+
+  const handleRedirect = () => {
+    if (isAuth === false) {
+      cogoToast.warn("Please sing in");
+    }
+  };
+
   return (
     <>
       <Container maxW="container.lg">
@@ -21,14 +33,14 @@ const LayoutProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
             display={{ base: "none", md: "block" }}
           >
             <List spacing={3}>
-              <ListItem>
-                <Link href="/my-gallery">
+              <ListItem onClick={handleRedirect}>
+                <Link href={isAuth ? "/my-gallery" : ""}>
                   <ListIcon as={CgBookmark} />
                   My Gallery
                 </Link>
               </ListItem>
-              <ListItem>
-                <Link href="/my-likes">
+              <ListItem onClick={handleRedirect}>
+                <Link href={isAuth ? "/my-likes" : ""}>
                   <ListIcon as={CgHeart} />
                   Favourite
                 </Link>

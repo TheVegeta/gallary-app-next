@@ -32,7 +32,7 @@ const RenderImage: FC<{
       cogoToast.success(response.data?.addFavouriteGallery.msg);
       reFetchLiked();
     } else {
-      cogoToast.error("Please sing in to like this image");
+      cogoToast.warn("Please sing in to like this image");
     }
   };
 

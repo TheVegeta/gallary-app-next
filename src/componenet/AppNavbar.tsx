@@ -4,13 +4,18 @@ import {
   CloseIcon,
   HamburgerIcon,
 } from "@chakra-ui/icons";
+import { Link } from "@chakra-ui/next-js";
 import {
+  Avatar,
   Box,
-  Button,
   Collapse,
   Flex,
   Icon,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -20,9 +25,22 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { CgImage } from "react-icons/cg";
+import profileImage from "../assets/profile.jpg";
+import { useAppState } from "../store";
+import AuthModal from "./auth/AuthModal";
 
 const AppNavbar = () => {
   const { isOpen, onToggle } = useDisclosure();
+  const { isAuth, name } = useAppState((item) => item.userInfo);
+  const setAuthFalse = useAppState((item) => item.setAuthFalse);
+
+  const [isAuthModal, setIsAuthModal] = useState<boolean>(false);
+
+  const toggleAuthModal = () => {
+    setIsAuthModal((item) => !item);
+  };
 
   return (
     <Box mb="4">
@@ -56,8 +74,15 @@ const AppNavbar = () => {
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
+            display="flex"
+            gap="0.5rem"
+            alignItems="center"
+            as={Link}
+            href="/"
+            _hover={{ textDecoration: "none" }}
           >
-            Logo
+            <CgImage />
+            Gallery App
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -71,35 +96,31 @@ const AppNavbar = () => {
           direction={"row"}
           spacing={6}
         >
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            href={"#"}
-          >
-            Sign In
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            href={"#"}
-            _hover={{
-              bg: "pink.300",
-            }}
-          >
-            Sign Up
-          </Button>
+          <Menu size="sm">
+            <MenuButton>
+              <Avatar size={{ base: "sm" }} src={profileImage.src} />
+            </MenuButton>
+            <MenuList>
+              {isAuth ? (
+                <>
+                  <MenuItem>Hello ,{name}</MenuItem>
+                  <MenuItem onClick={setAuthFalse}>Logout</MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem onClick={toggleAuthModal}>Login</MenuItem>
+                </>
+              )}
+            </MenuList>
+          </Menu>
         </Stack>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
+
+      <AuthModal isOpen={isAuthModal} toggle={toggleAuthModal} />
     </Box>
   );
 };
@@ -266,45 +287,6 @@ interface NavItem {
   href?: string;
 }
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Inspiration",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Find Work",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Learn Design",
-    href: "#",
-  },
-  {
-    label: "Hire Designers",
-    href: "#",
-  },
-];
+const NAV_ITEMS: Array<NavItem> = [];
 
 export { AppNavbar };

@@ -1,7 +1,11 @@
-import { Container } from "@chakra-ui/react";
+import LayoutProvider from "../componenet/LayoutProvider";
 
 const index = () => {
-  return <Container maxW="container.lg"></Container>;
+  return (
+    <LayoutProvider>
+      <></>
+    </LayoutProvider>
+  );
 };
 
 export default index;

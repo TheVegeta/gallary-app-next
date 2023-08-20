@@ -5,7 +5,6 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  HStack,
   Heading,
   Input,
   InputGroup,
@@ -21,43 +20,22 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
-    >
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+    <Flex align={"center"} justify={"center"}>
+      <Stack mx={"auto"} maxW={"lg"} py={5} px={2} w="85%">
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
             Sign up
           </Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
-          </Text>
+          <Text fontSize={"lg"}>to enjoy all of our cool features ✌️</Text>
         </Stack>
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
-          p={8}
+          p={4}
         >
           <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-            </HStack>
-            <FormControl id="email" isRequired>
+            <FormControl id="username" isRequired>
               <FormLabel>Email address</FormLabel>
               <Input type="email" />
             </FormControl>

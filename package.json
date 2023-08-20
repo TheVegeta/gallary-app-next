@@ -10,6 +10,7 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.1",
     "@chakra-ui/icons": "^2.1.0",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.0",
@@ -18,16 +19,23 @@
     "@types/node": "20.5.1",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
+    "apollo-upload-client": "^17.0.0",
+    "cogo-toast": "^4.2.3",
+    "formik": "^2.4.3",
     "framer-motion": "^10.16.0",
     "graphql": "^16.8.0",
     "next": "13.4.19",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.10.1",
+    "yup": "^1.2.0",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
-    "typescript": "^5.1.6",
-    "@graphql-codegen/client-preset": "4.1.0"
+    "@types/apollo-upload-client": "^17.0.2",
+    "typescript": "^5.1.6"
   }
 }

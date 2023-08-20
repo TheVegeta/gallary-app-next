@@ -1,6 +1,7 @@
 import { Box, Button, Image } from "@chakra-ui/react";
 import cogoToast from "cogo-toast";
 import { FC, memo, useEffect, useState } from "react";
+import isEqual from "react-fast-compare";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {
   GetAllGalleryQuery,
@@ -59,7 +60,7 @@ const RenderImage: FC<{
       />
     </Box>
   );
-});
+}, isEqual);
 
 const ImageGallary: FC<{ data: GetAllGalleryQuery["getAllGallery"] }> = memo(
   ({ data }) => {
@@ -106,7 +107,8 @@ const ImageGallary: FC<{ data: GetAllGalleryQuery["getAllGallery"] }> = memo(
         </Box>
       </>
     );
-  }
+  },
+  isEqual
 );
 
 export default ImageGallary;

@@ -8,7 +8,8 @@ import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { createUploadLink } from "apollo-upload-client";
 import cogoToast from "cogo-toast";
-import { FC, ReactNode } from "react";
+import { FC, memo, ReactNode } from "react";
+import isEqual from "react-fast-compare";
 import { useAppState } from "../store";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -27,7 +28,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
+const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   const {
     userInfo: { jwt },
   } = useAppState();
@@ -61,6 +62,6 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
   });
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
-};
+}, isEqual);
 
 export { AppProvider };

@@ -7,10 +7,11 @@ import {
   ListIcon,
   ListItem,
 } from "@chakra-ui/react";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, memo } from "react";
+import isEqual from "react-fast-compare";
 import { CgBookmark, CgHeart } from "react-icons/cg";
 
-const LayoutProvider: FC<{ children: ReactNode }> = ({ children }) => {
+const LayoutProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   return (
     <>
       <Container maxW="container.lg">
@@ -39,6 +40,6 @@ const LayoutProvider: FC<{ children: ReactNode }> = ({ children }) => {
       </Container>
     </>
   );
-};
+}, isEqual);
 
 export default LayoutProvider;

@@ -1,0 +1,29 @@
+query GetAllGallery($pageNo: Float!) {
+  getAllGallery(pageNo: $pageNo) {
+    _id
+    image
+    thumb
+    medium
+  }
+}
+
+query GetMyAllGallery($pageNo: Float!) {
+  getMyAllGallery(pageNo: $pageNo) {
+    _id
+    image
+    thumb
+    medium
+  }
+}
+
+query GetMyAllLikedGallery {
+  getMyAllLikedGallery {
+    _id
+    gallary {
+      _id
+      image
+      thumb
+      medium
+    }
+  }
+}

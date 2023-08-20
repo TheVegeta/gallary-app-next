@@ -8,12 +8,13 @@ query GetAllGallery($pageNo: Float!) {
   }
 }
 
-query GetMyAllGallery($pageNo: Float!) {
-  getMyAllGallery(pageNo: $pageNo) {
+query GetMyAllGallery {
+  getMyAllGallery {
     _id
     image
     thumb
     medium
+    createdAt
   }
 }
 
@@ -25,6 +26,7 @@ query GetMyAllLikedGallery {
       image
       thumb
       medium
+      createdAt
     }
   }
 }

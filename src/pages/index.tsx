@@ -33,13 +33,7 @@ const index = () => {
     }
 
     setImageGallery(
-      allArr
-        .filter((v, i, a) => a.findIndex((v2) => v2._id === v._id) === i)
-        .sort((a, b) => {
-          return (
-            new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
-          );
-        })
+      allArr.filter((v, i, a) => a.findIndex((v2) => v2._id === v._id) === i)
     );
   }, [data]);
 

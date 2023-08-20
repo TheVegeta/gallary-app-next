@@ -110,11 +110,6 @@ export type QueryGetAllGalleryArgs = {
   pageNo: Scalars['Float']['input'];
 };
 
-
-export type QueryGetMyAllGalleryArgs = {
-  pageNo: Scalars['Float']['input'];
-};
-
 export type AuthUserMutationVariables = Exact<{
   options: ICreateUser;
 }>;
@@ -157,17 +152,15 @@ export type GetAllGalleryQueryVariables = Exact<{
 
 export type GetAllGalleryQuery = { __typename?: 'Query', getAllGallery: Array<{ __typename?: 'Gallery', _id: string, image: string, thumb: string, medium: string, createdAt: string }> };
 
-export type GetMyAllGalleryQueryVariables = Exact<{
-  pageNo: Scalars['Float']['input'];
-}>;
+export type GetMyAllGalleryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyAllGalleryQuery = { __typename?: 'Query', getMyAllGallery: Array<{ __typename?: 'Gallery', _id: string, image: string, thumb: string, medium: string }> };
+export type GetMyAllGalleryQuery = { __typename?: 'Query', getMyAllGallery: Array<{ __typename?: 'Gallery', _id: string, image: string, thumb: string, medium: string, createdAt: string }> };
 
 export type GetMyAllLikedGalleryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyAllLikedGalleryQuery = { __typename?: 'Query', getMyAllLikedGallery: Array<{ __typename?: 'LikedGallery', _id: string, gallary?: { __typename?: 'Gallery', _id: string, image: string, thumb: string, medium: string } | null }> };
+export type GetMyAllLikedGalleryQuery = { __typename?: 'Query', getMyAllLikedGallery: Array<{ __typename?: 'LikedGallery', _id: string, gallary?: { __typename?: 'Gallery', _id: string, image: string, thumb: string, medium: string, createdAt: string } | null }> };
 
 
 export const AuthUserDocument = gql`
@@ -387,12 +380,13 @@ export type GetAllGalleryQueryHookResult = ReturnType<typeof useGetAllGalleryQue
 export type GetAllGalleryLazyQueryHookResult = ReturnType<typeof useGetAllGalleryLazyQuery>;
 export type GetAllGalleryQueryResult = Apollo.QueryResult<GetAllGalleryQuery, GetAllGalleryQueryVariables>;
 export const GetMyAllGalleryDocument = gql`
-    query GetMyAllGallery($pageNo: Float!) {
-  getMyAllGallery(pageNo: $pageNo) {
+    query GetMyAllGallery {
+  getMyAllGallery {
     _id
     image
     thumb
     medium
+    createdAt
   }
 }
     `;
@@ -409,11 +403,10 @@ export const GetMyAllGalleryDocument = gql`
  * @example
  * const { data, loading, error } = useGetMyAllGalleryQuery({
  *   variables: {
- *      pageNo: // value for 'pageNo'
  *   },
  * });
  */
-export function useGetMyAllGalleryQuery(baseOptions: Apollo.QueryHookOptions<GetMyAllGalleryQuery, GetMyAllGalleryQueryVariables>) {
+export function useGetMyAllGalleryQuery(baseOptions?: Apollo.QueryHookOptions<GetMyAllGalleryQuery, GetMyAllGalleryQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetMyAllGalleryQuery, GetMyAllGalleryQueryVariables>(GetMyAllGalleryDocument, options);
       }
@@ -433,6 +426,7 @@ export const GetMyAllLikedGalleryDocument = gql`
       image
       thumb
       medium
+      createdAt
     }
   }
 }

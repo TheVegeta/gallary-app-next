@@ -6,7 +6,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {
   GetAllGalleryQuery,
   useAddFavouriteGalleryMutation,
-  useGetMyAllLikedGalleryQuery,
+  useGetMyAllLikedGalleryLazyQuery,
 } from "../generated/graphql";
 import { useAppState } from "../store";
 
@@ -68,10 +68,15 @@ const ImageGallary: FC<{ data: GetAllGalleryQuery["getAllGallery"] }> = memo(
       userInfo: { isAuth },
     } = useAppState();
     const [myLikedImage, setMyLikedImage] = useState<Array<string>>([]);
-    const { data: likedImage, refetch } = useGetMyAllLikedGalleryQuery();
+
+    const [fetchData, { data: likedImage, refetch }] =
+      useGetMyAllLikedGalleryLazyQuery();
 
     useEffect(() => {
-      refetch();
+      if (isAuth) {
+        fetchData();
+        refetch();
+      }
     }, [isAuth]);
 
     useEffect(() => {
@@ -96,14 +101,21 @@ const ImageGallary: FC<{ data: GetAllGalleryQuery["getAllGallery"] }> = memo(
           bg="gray.800"
           sx={{ columnCount: [1, 2, 3], columnGap: "8px" }}
         >
-          {data.map((item) => (
-            <RenderImage
-              item={item}
-              key={item._id}
-              myLikedImage={myLikedImage}
-              reFetchLiked={refetch}
-            />
-          ))}
+          {data
+            .sort((a, b) => {
+              return (
+                new Date(a.createdAt).valueOf() -
+                new Date(b.createdAt).valueOf()
+              );
+            })
+            .map((item) => (
+              <RenderImage
+                item={item}
+                key={item._id}
+                myLikedImage={myLikedImage}
+                reFetchLiked={refetch}
+              />
+            ))}
         </Box>
       </>
     );

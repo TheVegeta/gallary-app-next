@@ -31,3 +31,11 @@ mutation DeleteGallary($options: IGetById!) {
     data
   }
 }
+
+mutation AddFavouriteGallery($imageId: String!) {
+  addFavouriteGallery(imageId: $imageId) {
+    success
+    msg
+    data
+  }
+}

@@ -4,6 +4,7 @@ query GetAllGallery($pageNo: Float!) {
     image
     thumb
     medium
+    createdAt
   }
 }
 

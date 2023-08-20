@@ -71,7 +71,16 @@ const UploadButton: FC<{ reFetchData: () => Promise<void> }> = ({
           } else {
             const form = new FormData();
             form.set("key", process.env.NEXT_PUBLIC_IMGBB_API!);
-            form.append("image", imgFile);
+            form.append(
+              "image",
+              new File(
+                [imgFile.slice(0, imgFile.size, "image/png")],
+                String(
+                  Date.now().toString(32) + Math.random().toString(16)
+                ).replace(/\./g, ""),
+                { type: imgFile.type }
+              )
+            );
 
             try {
               const res = await fetch("https://api.imgbb.com/1/upload", {
@@ -85,9 +94,12 @@ const UploadButton: FC<{ reFetchData: () => Promise<void> }> = ({
                 const response = await createGallery({
                   variables: {
                     options: {
-                      image: jsonData.data.image.url,
-                      medium: jsonData.data.medium.url,
-                      thumb: jsonData.data.thumb.url,
+                      image:
+                        jsonData.data?.image?.url || jsonData.data.display_url,
+                      medium:
+                        jsonData.data?.medium?.url || jsonData.data.display_url,
+                      thumb:
+                        jsonData.data?.thumb?.url || jsonData.data.display_url,
                     },
                   },
                 });
@@ -105,6 +117,7 @@ const UploadButton: FC<{ reFetchData: () => Promise<void> }> = ({
               }
               setIsImageProcessing(false);
             } catch (err) {
+              console.log(err);
               cogoToast.error("Trouble uploading image to imgbb server");
               setIsImageProcessing(false);
             }

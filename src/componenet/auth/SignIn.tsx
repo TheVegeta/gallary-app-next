@@ -19,7 +19,7 @@ import cogoToast from "cogo-toast";
 import { Formik, FormikHelpers } from "formik";
 import { FC, useState } from "react";
 import * as Yup from "yup";
-import { ICreateUser, useRegisterUserMutation } from "../../generated/graphql";
+import { ICreateUser, useAuthUserMutation } from "../../generated/graphql";
 import { useAppState } from "../../store";
 
 const initialValues: ICreateUser = { hash: "", username: "" };
@@ -29,13 +29,13 @@ const validationSchema = Yup.object().shape({
   username: Yup.string().required("username is required"),
 });
 
-const SignUp: FC<{
+const SignIn: FC<{
   closeToggle: VoidFunction;
   toggleLogin: VoidFunction;
 }> = ({ closeToggle, toggleLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { setAuthTrue } = useAppState();
-  const [registerUser] = useRegisterUserMutation();
+  const [registerUser] = useAuthUserMutation();
 
   const handleSubmit = async (
     val: ICreateUser,
@@ -47,17 +47,17 @@ const SignUp: FC<{
       variables: { options: { hash: val.hash, username: val.username } },
     });
 
-    if (response.data?.registerUser.success) {
+    if (response.data?.authUser.success) {
       setAuthTrue({
         email: "",
         isAuth: true,
-        jwt: response.data.registerUser.jwt,
-        name: response.data.registerUser.username,
+        jwt: response.data?.authUser.jwt,
+        name: response.data?.authUser.username,
       });
-      cogoToast.success(response.data?.registerUser.msg);
+      cogoToast.success(response.data?.authUser.msg);
       closeToggle();
     } else {
-      cogoToast.error(response.data?.registerUser.msg);
+      cogoToast.error(response.data?.authUser.msg);
     }
 
     action.setSubmitting(false);
@@ -68,7 +68,7 @@ const SignUp: FC<{
       <Stack mx={"auto"} maxW={"lg"} py={5} px={2} w="85%">
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Sign up
+            Sign in
           </Heading>
           <Text fontSize={"lg"}>to enjoy all of our cool features ✌️</Text>
         </Stack>
@@ -136,13 +136,13 @@ const SignUp: FC<{
                           bg: "blue.500",
                         }}
                       >
-                        Sign up
+                        Sign in
                       </Button>
                     </Stack>
                     <Stack pt={2}>
                       <Text align={"center"} onClick={toggleLogin}>
-                        Already have account ?{" "}
-                        <Link color={"blue.400"}>Sing in</Link>
+                        Don't have account ?{" "}
+                        <Link color={"blue.400"}>Sing up</Link>
                       </Text>
                     </Stack>
                   </Stack>
@@ -156,4 +156,4 @@ const SignUp: FC<{
   );
 };
 
-export default SignUp;
+export default SignIn;

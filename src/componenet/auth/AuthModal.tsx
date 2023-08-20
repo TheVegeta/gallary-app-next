@@ -5,13 +5,20 @@ import {
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useState } from "react";
+import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
 const AuthModal: FC<{ isOpen: boolean; toggle: VoidFunction }> = ({
   isOpen,
   toggle,
 }) => {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const toggleLogin = () => {
+    setIsLoginOpen((item) => !item);
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={toggle}>
@@ -19,7 +26,15 @@ const AuthModal: FC<{ isOpen: boolean; toggle: VoidFunction }> = ({
         <ModalContent>
           <ModalCloseButton />
           <ModalBody>
-            <SignUp />
+            {isLoginOpen ? (
+              <>
+                <SignIn closeToggle={toggle} toggleLogin={toggleLogin} />
+              </>
+            ) : (
+              <>
+                <SignUp closeToggle={toggle} toggleLogin={toggleLogin} />
+              </>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

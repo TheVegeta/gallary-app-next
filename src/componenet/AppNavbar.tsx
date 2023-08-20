@@ -96,19 +96,19 @@ const AppNavbar = () => {
           direction={"row"}
           spacing={6}
         >
-          <Menu size="sm">
+          <Menu size="sm" isLazy={true}>
             <MenuButton>
               <Avatar size={{ base: "sm" }} src={profileImage.src} />
             </MenuButton>
             <MenuList>
               {isAuth ? (
                 <>
-                  <MenuItem>Hello ,{name}</MenuItem>
-                  <MenuItem onClick={setAuthFalse}>Logout</MenuItem>
+                  <MenuItem>Hello, {name}</MenuItem>
+                  <MenuItem onClick={setAuthFalse}>Sign out</MenuItem>
                 </>
               ) : (
                 <>
-                  <MenuItem onClick={toggleAuthModal}>Login</MenuItem>
+                  <MenuItem onClick={toggleAuthModal}>Sign up</MenuItem>
                 </>
               )}
             </MenuList>

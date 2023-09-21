@@ -46,9 +46,7 @@ const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     cache: new InMemoryCache(),
     link: from([
       errorLink,
-      authLink.concat(
-        createUploadLink({ uri: process.env.NEXT_PUBLIC_API_URL! as string })
-      ),
+      authLink.concat(createUploadLink({ uri: "/graphql" })),
     ]),
     headers: {
       authorization: jwt || "",
